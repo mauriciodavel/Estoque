@@ -1,22 +1,22 @@
-
 package br.com.infox.telas;
 
 /**
  *
  * @author MDAVEL
  */
-
 import br.com.infox.dal.ModuloConexao;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import br.com.infox.telas.TelaLogin;
+
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
     Connection conexao = null;
-    
+
     public TelaPrincipal() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -36,6 +36,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         lblFundoDesktop = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
+        lblPerfil = new javax.swing.JLabel();
+        lblPerfilTitulo = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menCad = new javax.swing.JMenu();
         menCadCli = new javax.swing.JMenuItem();
@@ -45,11 +48,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        menOpcoes = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menOpc = new javax.swing.JMenu();
+        menOpcSobre = new javax.swing.JMenuItem();
         menSair = new javax.swing.JMenu();
         menSairSistema = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menSairLogout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SENAI CIVIT - Sistema de Controle de Ordem de erviço");
@@ -61,18 +64,47 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Desktop.setBackground(new java.awt.Color(204, 255, 204));
-        Desktop.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Desktop.setPreferredSize(new java.awt.Dimension(1140, 680));
 
         lblFundoDesktop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/Fundo Desktop.jpg"))); // NOI18N
-        Desktop.add(lblFundoDesktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, -1));
 
-        getContentPane().add(Desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 720));
+        Desktop.setLayer(lblFundoDesktop, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
+        Desktop.setLayout(DesktopLayout);
+        DesktopLayout.setHorizontalGroup(
+            DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblFundoDesktop, javax.swing.GroupLayout.PREFERRED_SIZE, 1140, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        DesktopLayout.setVerticalGroup(
+            DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DesktopLayout.createSequentialGroup()
+                .addComponent(lblFundoDesktop)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(Desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 680));
 
         lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(1141, 22, 210, 29));
+        lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(1141, 22, 220, 29));
 
         lblData.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(1141, 79, 210, 28));
+        lblData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 70, 220, 28));
+
+        lblPerfil.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 160, 220, 28));
+
+        lblPerfilTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblPerfilTitulo.setForeground(new java.awt.Color(0, 0, 204));
+        lblPerfilTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPerfilTitulo.setText("Perfil");
+        getContentPane().add(lblPerfilTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 130, 220, 28));
+
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/Logo Principal.jpg"))); // NOI18N
+        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 490, 200, 180));
 
         menCad.setText("Cadastro");
 
@@ -87,6 +119,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menCadUsu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
         menCadUsu.setText("Usuários");
+        menCadUsu.setEnabled(false);
+        menCadUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menCadUsuActionPerformed(evt);
+            }
+        });
         menCad.add(menCadUsu);
 
         menCadOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
@@ -96,6 +134,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(menCad);
 
         menRel.setText("Relatórios");
+        menRel.setEnabled(false);
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Clientes");
@@ -111,34 +150,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menRel);
 
-        menOpcoes.setText("Opções");
+        menOpc.setText("Opções");
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Sobre");
-        menOpcoes.add(jMenuItem4);
+        menOpcSobre.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menOpcSobre.setText("Sobre");
+        menOpcSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menOpcSobreActionPerformed(evt);
+            }
+        });
+        menOpc.add(menOpcSobre);
 
-        jMenuBar1.add(menOpcoes);
+        jMenuBar1.add(menOpc);
 
         menSair.setText("Sair");
 
         menSairSistema.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         menSairSistema.setText("Sair do Sistema");
-        menSair.add(menSairSistema);
-
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem5.setText("Logout");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menSairSistema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menSairSistemaActionPerformed(evt);
             }
         });
-        menSair.add(jMenuItem5);
+        menSair.add(menSairSistema);
+
+        menSairLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK));
+        menSairLogout.setText("Logout");
+        menSairLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menSairLogoutActionPerformed(evt);
+            }
+        });
+        menSair.add(menSairLogout);
 
         jMenuBar1.add(menSair);
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 1377, 744);
+        setBounds(0, 0, 1377, 741);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menCadCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menCadCliActionPerformed
@@ -153,9 +202,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowActivated
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void menSairLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menSairLogoutActionPerformed
+        this.dispose();
+        TelaLogin login = new TelaLogin();
+        login.setVisible(true);
+    }//GEN-LAST:event_menSairLogoutActionPerformed
+
+    private void menSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menSairSistemaActionPerformed
+        int sair = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja encerrar o sistema ?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (sair == JOptionPane.YES_OPTION) {
+            System.exit(0);
+
+        }
+    }//GEN-LAST:event_menSairSistemaActionPerformed
+
+    private void menOpcSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menOpcSobreActionPerformed
+        TelaSobre sobre = new TelaSobre();
+        sobre.setVisible(true);
+        
+    }//GEN-LAST:event_menOpcSobreActionPerformed
+
+    private void menCadUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menCadUsuActionPerformed
+       TelaUsuario usuario = new TelaUsuario();
+       Desktop.add(usuario);
+       usuario.setVisible(true);
+       
+       //this.setVisible(true);
+    }//GEN-LAST:event_menCadUsuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,7 +261,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaPrincipal().setVisible(true);
-                
+
             }
         });
     }
@@ -199,18 +272,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     public static javax.swing.JLabel lblData;
-    private javax.swing.JLabel lblFundoDesktop;
+    public static javax.swing.JLabel lblFundoDesktop;
+    private javax.swing.JLabel lblLogo;
+    public static javax.swing.JLabel lblPerfil;
+    private javax.swing.JLabel lblPerfilTitulo;
     public static javax.swing.JLabel lblUsuario;
     private javax.swing.JMenu menCad;
     public static javax.swing.JMenuItem menCadCli;
     public static javax.swing.JMenuItem menCadOs;
     public static javax.swing.JMenuItem menCadUsu;
-    private javax.swing.JMenu menOpcoes;
+    private javax.swing.JMenu menOpc;
+    private javax.swing.JMenuItem menOpcSobre;
     public static javax.swing.JMenu menRel;
     private javax.swing.JMenu menSair;
+    private javax.swing.JMenuItem menSairLogout;
     private javax.swing.JMenuItem menSairSistema;
     // End of variables declaration//GEN-END:variables
 }

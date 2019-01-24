@@ -37,12 +37,14 @@ public class TelaLogin extends javax.swing.JFrame {
                 String perfil = rs.getString(6);
                 //System.out.println(perfil);
                 // a estrutura abaixo faz o tratamento do perfil
-                if (perfil.equals("admin")) {
+                if (perfil.equals("Admin")) {
                     TelaPrincipal principal = new TelaPrincipal();
                     principal.setVisible(true);
                     TelaPrincipal.menRel.setEnabled(true);
                     TelaPrincipal.menCadUsu.setEnabled(true);
                     TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    TelaPrincipal.lblPerfil.setText(perfil);
+                    TelaPrincipal.lblPerfil.setForeground(Color.red);
                     TelaPrincipal.lblUsuario.setForeground(Color.red);
                     // fechando a tela de login ao logar
                     this.dispose();
@@ -50,6 +52,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     TelaPrincipal principal = new TelaPrincipal();
                     principal.setVisible(true);
                     TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                    TelaPrincipal.lblPerfil.setText(perfil);
                     this.dispose();
                 }
                 // fechando a conexão com o banco de dados
@@ -75,7 +78,7 @@ public class TelaLogin extends javax.swing.JFrame {
         } else {
             lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/dbErro1.png")));
         }
-        System.out.println(conexao);
+        //System.out.println(conexao);
     }
 
     /**
