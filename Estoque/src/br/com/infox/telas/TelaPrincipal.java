@@ -104,7 +104,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().add(lblPerfilTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 130, 220, 28));
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infox/icones/Logo Principal.jpg"))); // NOI18N
-        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 490, 200, 180));
+        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 490, 200, 160));
 
         menCad.setText("Cadastro");
 
