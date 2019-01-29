@@ -9,6 +9,7 @@ package br.com.infox.telas;
 import java.sql.*;
 import br.com.infox.dal.ModuloConexao;
 import java.awt.Color;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 public class TelaLogin extends javax.swing.JFrame {
@@ -70,6 +71,7 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
+        setar_icone();
         
         conexao = ModuloConexao.conector();
         
@@ -190,4 +192,8 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void setar_icone() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/br/com/infox/icones/Logo Principal.jpg")));
+    }
 }

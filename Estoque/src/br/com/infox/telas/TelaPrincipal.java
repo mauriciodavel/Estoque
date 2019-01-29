@@ -11,6 +11,8 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import br.com.infox.telas.TelaLogin;
+import br.com.infox.telas.TelaCliente;
+import java.awt.Toolkit;
 
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -19,6 +21,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public TelaPrincipal() {
         initComponents();
+        setar_icone();
         this.setExtendedState(MAXIMIZED_BOTH);
         conexao = ModuloConexao.conector();
     }
@@ -191,7 +194,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menCadCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menCadCliActionPerformed
-        // TODO add your handling code here:
+        TelaCliente cliente = new TelaCliente();
+        Desktop.add(cliente);
+        cliente.setVisible(true);
+        
     }//GEN-LAST:event_menCadCliActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -289,4 +295,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menSairLogout;
     private javax.swing.JMenuItem menSairSistema;
     // End of variables declaration//GEN-END:variables
+
+    public void setar_icone() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/br/com/infox/icones/Logo Principal.jpg")));
+    }
 }
